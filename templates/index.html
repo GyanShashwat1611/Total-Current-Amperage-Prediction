@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Time Series Prediction Model</title>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12" style="padding-top: 68px;">
+			<div class="row">
+                
+                <div class="col-md-12">
+                    <h3>POC: Dashboard for time series prediction of Total Current Amperage by the machine categories by power status of the machine</h3>
+                </div<br><br><br>
+                <div class="col-md-12">
+                    <h4>User cases and assumptions</h4>
+                    <p>
+                        Assumption 1 : The user would like to have the dashboard to predict Total Current Amperage for the future dates so that they can create a plan about power consumption by the machine and draft a finacial documents. <br>
+                        Assumption 2 : To fulfil assumpton 1 the user would like to have the predicted plot of Total Current Amperage for the next month after already stored data. <br>
+                        Assumption 3 : To fulfil assumpton 1 the user would like to generate dynamic plot by predicting Total Current Amperage for the selected date range and power status of machine using time series prediction model.
+                    </p>
+                    <h4>Other User Cases</h4>
+                    <p>
+                        There can be numerous user cases can be drafted for the dashboard by predicting Total Current Amperage for diffrent time intervals. The user stories differs from stakeholders to stakeholders based on their function and usage of the plots and KPI reports from the dashboard.
+                    </p>
+                </div>
+				<div class="col-md-12" style="text-align: center;">
+                    <h5> Plot for next 1 month prediction of Total Current Amperage from the last Total Current Amperage for OFF status in the given dataset</h5>
+					<img style="width:100%" alt="" src="{{url_for('static', filename='monthly_off_status_prediction_plot.png')}}">
+				</div>
+				<div class="col-md-12" style="text-align: center;">
+                    <h5> Plot for next 1 month prediction of Total Current Amperage from the last Total Current Amperage for ON status in the given dataset</h5>
+					<img style="width:100%" alt="" src="{{url_for('static', filename='monthly_on_status_prediction_plot.png')}}">
+				</div>
+               
+                
+            </div>
+					
+				</div>
+			</div>
+		</div>
+        <div class="container-fluid" style="padding-bottom: 0;">
+            <a href="#" data-toggle="tooltip" data-placement="right" title="Select the date range and power status to generate plot of predicted Total Current Amperage of the machine">
+                <h4>Generated plot of predicted Total Current Amperage</h4></a>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <form action="" method="post" name="form" id=""></form>
+                        <div class="col-md-3">
+                            <label> From Date:</label>
+                            <input type="date" id="from_date">
+                        </div>
+                        <div class="col-md-3">
+                            <label> To Date:</label>
+                            <input type="date" id="to_date">
+                        </div>
+                        <div class="col-md-1"><label> Power Status:</label></div>
+                        <div class="col-md-2">
+                            
+                            <select id="power_status" class='form-control'>
+                                <option value="1">ON</option>
+                                <option value="0">OFF</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type='submit' name='' id="generatepredictionplot" style="background-color: #EF5D10;
+                    color: white;
+                    border-color: white;">Generate Report</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+            <div class="row" id="showgenertaedpredictionplot">
+            </div>
+
+            <br><br>
+            <br> <br><br><br>
+            <br><br>
+            <br> <br><br><br>
+            <br><br>
+            <br> <br><br><br>
+            <br><br>
+            <br> <br><br><br>
+         </body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function() {
+ $('#generatepredictionplot').click(function(){
+    $.post("/get_generated_plot", {
+     from_date: $('#from_date').val(),
+     to_date: $('#to_date').val(),
+     power_status: $('#power_status').val(),
+    }, function(response){ 
+        $('#showgenertaedpredictionplot').html(response);
+        $('#showgenertaedpredictionplot').append(response.htmlresponse);
+    });
+    return false;
+  });
+});
+</script>
